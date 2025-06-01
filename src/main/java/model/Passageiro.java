@@ -1,14 +1,24 @@
 package model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
 public class Passageiro {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String senha;
     private LocalDate nascimento;
+
+    protected Passageiro(){}
 
     private Passageiro(Builder builder) {
         this.nome = builder.nome;
@@ -47,22 +57,22 @@ public class Passageiro {
         private String senha;
         private LocalDate nascimento;
 
-        public Builder nome(String username) {
+        public Builder setNome(String username) {
             this.nome = nome;
             return this;
         }
 
-        public Builder email(String email) {
+        public Builder setEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public Builder senha(String password) {
+        public Builder setSenha(String password) {
             this.senha = senha;
             return this;
         }
 
-        public Builder nascimento(LocalDate nascimento) {
+        public Builder setNascimento(LocalDate nascimento) {
             this.nascimento = nascimento;
             return this;
         }
