@@ -40,6 +40,14 @@
     .navbar-brand{
         font-size: 24px;
     }
+    .login-error {
+      color: #dc3545;
+      font-size: 0.875em;
+      margin-top: 0.25rem;
+    }
+    .cpf-mask {
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
@@ -56,14 +64,14 @@
           <a class="nav-link active" href="Agencia.html">Início</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Destinos</a>
+          <a class="nav-link" href="Destinos.html">Destinos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modal">Contato</a>
         </li>
       </ul>
       <div class="d-flex">
-        <a href="#" class="btn btn-light me-2">Login</a>
+        <button class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
         <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#cadastroModal">Cadastre-se</button>
       </div>
     </div>
@@ -90,42 +98,82 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="formCadastro">
+        <form id="formCadastro" th:action="@{/usuarios/cadastro}" th:object="${usuario}" method="post">
           <div class="mb-3">
             <label for="nomeCompleto" class="form-label">Nome Completo</label>
-            <input type="text" class="form-control" id="nomeCompleto" required>
+            <input type="text" class="form-control" id="nomeCompleto" th:field="*{nomeCompleto}" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('nomeCompleto')}" th:errors="*{nomeCompleto}"></small>
           </div>
           <div class="mb-3">
             <label for="cpf" class="form-label">CPF</label>
-            <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+            <input type="text" class="form-control" id="cpf" th:field="*{cpf}" placeholder="000.000.000-00" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></small>
           </div>
           <div class="mb-3">
             <label for="telefone" class="form-label">Telefone</label>
-            <input type="tel" class="form-control" id="telefone" placeholder="(00) 00000-0000" required>
+            <input type="tel" class="form-control" id="telefone" th:field="*{telefone}" placeholder="(00) 00000-0000" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></small>
           </div>
           <div class="mb-3">
             <label for="endereco" class="form-label">Endereço</label>
-            <input type="text" class="form-control" id="endereco" required>
+            <input type="text" class="form-control" id="endereco" th:field="*{endereco}" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></small>
           </div>
           <div class="mb-3">
             <label for="senha" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="senha" required>
+            <input type="password" class="form-control" id="senha" th:field="*{senha}" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></small>
           </div>
           <div class="mb-3">
             <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
-            <input type="password" class="form-control" id="confirmarSenha" required>
+            <input type="password" class="form-control" id="confirmarSenha" th:field="*{confirmarSenha}" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('confirmarSenha')}" th:errors="*{confirmarSenha}"></small>
           </div>
           <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="termos" required>
+            <input class="form-check-input" type="checkbox" id="termos" th:field="*{termos}" required>
             <label class="form-check-label" for="termos">
               Aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>
             </label>
+            <small class="text-danger" th:if="${#fields.hasErrors('termos')}" th:errors="*{termos}"></small>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="submit" form="formCadastro" class="btn btn-primary">Cadastrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Acesse sua conta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formLogin">
+          <div class="mb-3">
+            <label for="loginCpf" class="form-label">CPF</label>
+            <input type="text" class="form-control cpf-mask"
+                   id="loginCpf" name="cpf"
+                   th:value="${#httpServletRequest.remoteUser != null ? #httpServletRequest.remoteUser : ''}"
+                   placeholder="000.000.000-00" required>
+            <div class="invalid-feedback" id="cpfError">Por favor, insira um CPF válido</div>
+          </div>
+          <div class="mb-3">
+            <label for="loginSenha" class="form-label">Senha</label>
+            <input type="password" class="form-control"
+                   id="loginSenha" name="senha" required>
+            <div class="invalid-feedback" id="senhaError">Por favor, insira sua senha</div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary" form="formLogin">Entrar</button>
       </div>
     </div>
   </div>
@@ -192,7 +240,7 @@
   </div>
 </div>
 
-<footer class="bg-white text-dark py-5 mt-5">
+<footer class="bg-white text-dark py-5 mt-5 border-top border-secondary">
   <div class="container">
     <div class="row">
       <div class="col-md-4">
