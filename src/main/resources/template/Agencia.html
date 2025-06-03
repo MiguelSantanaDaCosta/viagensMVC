@@ -37,29 +37,29 @@
         color: red;
         font-weight: bold;
     }
+    .navbar-brand{
+        font-size: 24px;
+    }
   </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="#">ViajeMais</a>
+    <a class="navbar-brand" href="Agencia.html">ViajeMais</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Início</a>
+          <a class="nav-link active" href="Agencia.html">Início</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Destinos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Promoções</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contato</a>
+          <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modal">Contato</a>
         </li>
       </ul>
       <div class="d-flex">
@@ -69,6 +69,18 @@
     </div>
   </div>
 </nav>
+
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+          <div class="modal-body">
+            Esta funcionalidade ainda não está disponível.
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="cadastroModal" tabindex="-1" aria-labelledby="cadastroModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -146,9 +158,8 @@
           Ordenar por
         </button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Preço: menor primeiro</a></li>
-          <li><a class="dropdown-item" href="#">Preço: maior primeiro</a></li>
-          <li><a class="dropdown-item" href="#">Destino (A-Z)</a></li>
+          <li><a class="dropdown-item" data-ordem="asc">Preço: menor primeiro</a></li>
+          <li><a class="dropdown-item" data-ordem="desc">Preço: maior primeiro</a></li>
         </ul>
       </div>
     </div>
@@ -186,7 +197,7 @@
     <div class="row">
       <div class="col-md-4">
         <h5>Sobre nós</h5>
-        <p>ViajeMais é uma agência de viagens comprometida em oferecer as melhores experiências aos nossos clientes.</p>
+        <p>Loren ipsun dolor sit anet, consectetur adipisci elit, sed eiusnod tenpor incidunt ut labore et dolore nagna aliqua. Ut enin ad ninin venian, quis nostrun exercitationen ullan corporis suscipit laboriosan, nisi ut aliquid ex ea connodi consequatur.</p>
       </div>
       <div class="col-md-4">
         <h5>Links úteis</h5>
@@ -200,8 +211,8 @@
         <h5>Contato</h5>
         <address>
           <strong>ViajeMais</strong><br>
-          Rua das Viagens, 123<br>
-          São Paulo, SP<br>
+          Loren ipsun, 123<br>
+          Loren ipsun, LI<br>
           <abbr title="Phone">Tel:</abbr> (11) 1234-5678
         </address>
       </div>
