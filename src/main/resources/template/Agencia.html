@@ -17,8 +17,6 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
     .preco {
-        font-size: 1.5rem;
-        font-weight: bold;
         color: #0d6efd;
     }
     .hero-section {
@@ -40,11 +38,6 @@
     .navbar-brand{
         font-size: 24px;
     }
-    .login-error {
-      color: #dc3545;
-      font-size: 0.875em;
-      margin-top: 0.25rem;
-    }
     .cpf-mask {
       font-family: monospace;
     }
@@ -61,30 +54,60 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="Agencia.html">Início</a>
+          <a class="nav-link active" href="/">Início</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="Destinos.html">Destinos</a>
+          <a class="nav-link" href="/clientes">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modal">Contato</a>
+          <a class="nav-link" href=".html"></a>
         </li>
       </ul>
       <div class="d-flex">
-        <button class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-        <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#cadastroModal">Cadastre-se</button>
+        <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#cadastroModal">Cadastro Cliente</button>
       </div>
     </div>
   </div>
 </nav>
 
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="cadastroViagemModal" tabindex="-1" aria-labelledby="cadastroViagemModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-          <div class="modal-body">
-            Esta funcionalidade ainda não está disponível.
+        <h5 class="modal-title" id="cadastroViagemModalLabel">Cadastrar Nova Viagem</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formCadastroViagem" th:action="@{/viagens/cadastrar}" method="post">
+          <div class="mb-3">
+            <label for="destino" class="form-label">ID do cliente</label>
+            <input type="text" class="form-control" name="cliente" required>
           </div>
+          <div class="mb-3">
+            <label for="destino" class="form-label">Destino</label>
+            <input type="text" class="form-control" name="destino" required>
+          </div>
+          <div class="mb-3">
+            <label for="preco" class="form-label">Preço (R$)</label>
+            <input type="number" step="0.01" class="form-control" name="preco" required>
+          </div>
+          <div class="mb-3">
+            <label for="dataInicio" class="form-label">Data de Início</label>
+            <input type="date" class="form-control" name="dataInicio" required>
+          </div>
+          <div class="mb-3">
+            <label for="dataFim" class="form-label">Data de Fim</label>
+            <input type="date" class="form-control" name="dataFim" required>
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" name="status">
+            <label class="form-check-label" for="status">Viagem disponível</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" form="formCadastroViagem" class="btn btn-primary">Cadastrar Viagem</button>
       </div>
     </div>
   </div>
@@ -98,43 +121,38 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="formCadastro" th:action="@{/usuarios/cadastro}" th:object="${usuario}" method="post">
+        <form id="formCadastro" th:action="@{/clientes}" method="post">
           <div class="mb-3">
-            <label for="nomeCompleto" class="form-label">Nome Completo</label>
-            <input type="text" class="form-control" id="nomeCompleto" th:field="*{nomeCompleto}" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('nomeCompleto')}" th:errors="*{nomeCompleto}"></small>
+            <label for="nome" class="form-label">Nome Completo</label>
+            <input type="text" class="form-control" name="nome" required>
+            <small class="text-danger" ></small>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" name="email" placeholder="voce@email.com" required>
+            <small class="text-danger" ></small>
           </div>
           <div class="mb-3">
             <label for="cpf" class="form-label">CPF</label>
-            <input type="text" class="form-control" id="cpf" th:field="*{cpf}" placeholder="000.000.000-00" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></small>
+            <input type="text" class="form-control" name="cpf" placeholder="000.000.000-00" required>
+            <small class="text-danger" ></small>
           </div>
           <div class="mb-3">
             <label for="telefone" class="form-label">Telefone</label>
-            <input type="tel" class="form-control" id="telefone" th:field="*{telefone}" placeholder="(00) 00000-0000" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></small>
+            <input type="tel" class="form-control" name="telefone" placeholder="(00) 00000-0000" required>
+            <small class="text-danger" ></small>
           </div>
           <div class="mb-3">
             <label for="endereco" class="form-label">Endereço</label>
-            <input type="text" class="form-control" id="endereco" th:field="*{endereco}" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></small>
-          </div>
-          <div class="mb-3">
-            <label for="senha" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="senha" th:field="*{senha}" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></small>
-          </div>
-          <div class="mb-3">
-            <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
-            <input type="password" class="form-control" id="confirmarSenha" th:field="*{confirmarSenha}" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('confirmarSenha')}" th:errors="*{confirmarSenha}"></small>
+            <input type="text" class="form-control" name="endereco" required>
+            <small class="text-danger"></small>
           </div>
           <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="termos" th:field="*{termos}" required>
+            <input class="form-check-input" type="checkbox" id="termos" required>
             <label class="form-check-label" for="termos">
               Aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>
             </label>
-            <small class="text-danger" th:if="${#fields.hasErrors('termos')}" th:errors="*{termos}"></small>
+            <small class="text-danger" ></small>
           </div>
         </form>
       </div>
@@ -146,52 +164,10 @@
   </div>
 </div>
 
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Acesse sua conta</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="formLogin">
-          <div class="mb-3">
-            <label for="loginCpf" class="form-label">CPF</label>
-            <input type="text" class="form-control cpf-mask"
-                   id="loginCpf" name="cpf"
-                   th:value="${#httpServletRequest.remoteUser != null ? #httpServletRequest.remoteUser : ''}"
-                   placeholder="000.000.000-00" required>
-            <div class="invalid-feedback" id="cpfError">Por favor, insira um CPF válido</div>
-          </div>
-          <div class="mb-3">
-            <label for="loginSenha" class="form-label">Senha</label>
-            <input type="password" class="form-control"
-                   id="loginSenha" name="senha" required>
-            <div class="invalid-feedback" id="senhaError">Por favor, insira sua senha</div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="submit" class="btn btn-primary" form="formLogin">Entrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="hero-section text-center">
   <div class="container">
-    <h1 class="display-4">Descubra seu próximo destino</h1>
+    <h1 class="display-4">ViajeMais</h1>
     <p class="lead">Encontre as melhores ofertas para suas férias dos sonhos</p>
-
-    <form class="row g-3 justify-content-center mt-4">
-      <div class="col-md-4">
-        <input type="text" class="form-control form-control-lg" placeholder="Para onde?">
-      </div>
-      <div class="col-md-2">
-        <button type="submit" class="btn btn-primary btn-lg w-100">Buscar</button>
-      </div>
-    </form>
   </div>
 </div>
 
@@ -209,6 +185,9 @@
           <li><a class="dropdown-item" data-ordem="asc">Preço: menor primeiro</a></li>
           <li><a class="dropdown-item" data-ordem="desc">Preço: maior primeiro</a></li>
         </ul>
+        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#cadastroViagemModal">
+          Nova Viagem
+        </button>
       </div>
     </div>
   </div>
@@ -217,22 +196,25 @@
     <table class="table table-hover align-middle">
       <thead class="table-light">
       <tr>
-        <th>Destino</th>
-        <th>Preço</th>
-        <th>Status</th>
-        <th>Ações</th>
+        <th class="text-center">ID</th>
+        <th class="text-center">Destino</th>
+        <th class="text-center">Preço</th>
+        <th class="text-center">Data início</th>
+        <th class="text-center">Data final</th>
+        <th class="text-center">Ações</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="viagem : ${viagens}">
-        <td th:text="${viagem.destino}"></td>
-        <td th:text="'R$ ' + ${viagem.preco}" class="preco"></td>
-        <td>
-          <span th:if="${viagem.disponivel}" class="status-disponivel"></span>
-          <span th:unless="${viagem.disponivel}" class="status-esgotado"></span>
-        </td>
-        <td>
-          <button class="btn btn-primary btn-sm">Reservar</button>
+      <tr th:each="viagem, iter : ${viagens}">
+        <td th:text="${viagem.id}" class="text-center"></td>
+        <td th:text="${viagem.destino}" class="text-center"></td>
+        <td th:text="'R$ ' + ${viagem.preco}" class="preco text-center"></td>
+        <td th:text="${viagem.dataInicio}" class="text-center"></td>
+        <td th:text="${viagem.dataFim}" class="text-center"></td>
+        <td class="text-center">
+          <a class="btn btn-danger btn-sm btn-action" th:href="@{/viagens/deletar?(viagemId=${viagem.id})}">
+            <i class="bi bi-trash"></i> Excluir
+          </a>
         </td>
       </tr>
       </tbody>
